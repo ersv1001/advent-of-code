@@ -1,38 +1,33 @@
-input_file = open('input1.txt', 'r')
-input = input_file.read() 
-counter = 0
+input_file = open("input1.txt", "r")
+input = input_file.read()
+visited_locations = {}
 
-n1 = e1 = s1 = w1 = 0
-n2 = e2 = s2 = w2 = 0
 
-visited_locations = {'0 0': 2}
+def move(coordinates, direction):
+    if direction == "^":
+        coordinates[1] += 1
+    elif direction == ">":
+        coordinates[0] += 1
+    elif direction == "v":
+        coordinates[1] -= 1
+    elif direction == "<":
+        coordinates[0] -= 1
+    print(coordinates)
+    if (coordinates[0], coordinates[1]) not in visited_locations:
+        visited_locations[coordinates[0], coordinates[1]] = 1
+
+
+turn_counter = 0
+coordinates1 = [0, 0]
+coordinates2 = [0, 0]
+
 
 for direction in input:
-    counter += 1
-    if(counter % 2) == 0:
-        if direction == '^':
-            n2 += 1
-        elif direction == '>':
-            e2 += 1
-        elif direction == 'v':
-            s2 += 1
-        elif direction == '<':  
-            w2 += 1
-        coordinates = str(n2-s2) + ' ' + str(e2-w2)
-    else: 
-        if direction == '^':
-            n1 += 1
-        elif direction == '>':
-            e1 += 1
-        elif direction == 'v':
-            s1 += 1
-        elif direction == '<':  
-            w1 += 1
-        coordinates = str(n1-s1) + ' ' + str(e1-w1)
-    
-    if(coordinates in visited_locations):
-        visited_locations[coordinates] += 1
+    turn_counter += 1
+    if (turn_counter % 2) == 0:
+        move(coordinates2, direction)
     else:
-        visited_locations[coordinates] = 1
+        move(coordinates1, direction)
+
 
 print(len(visited_locations))
